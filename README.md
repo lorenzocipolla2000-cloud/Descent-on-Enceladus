@@ -83,16 +83,6 @@ Navigation estimates the lander's position, velocity and attitude from noisy mea
 
 Sensors and filters are separate blocks: the sensor sees the true state, the filter sees only the measurements.
 
-#### Sensors
-
-| Sensor | Rate | Measures | Model |
-|---|---|---|---|
-| Accelerometer | 50 Hz | specific force in body axes | $\tilde{\mathbf a}_b=A(q)\,\mathbf T/m+\mathbf F_{rcs,b}/m+\mathbf b_a+\boldsymbol\eta_a$ |
-| Gyroscope | 50 Hz | angular velocity in body axes | $\tilde{\boldsymbol\omega}=\boldsymbol\omega+\mathbf b_g+\boldsymbol\eta_v$ |
-| Radar altimeter | 10 Hz | altitude | $\tilde h=\|\mathbf p\|-R+\nu_h$, $\ \sigma_h=\sigma_{h0}+k_h h$ |
-| TRN camera | 1 Hz | 3D position | $\tilde{\mathbf p}_c=\mathbf p+\boldsymbol\nu_c$, $\ \sigma_c=\max(\sigma_{c0},k_c h)$ |
-| Star tracker | 5 Hz | attitude | $\tilde q=\delta q(\delta\boldsymbol\theta)\otimes q$, $\ \sigma_{st}\approx10''$ |
-
 Biases evolve as random walks, $\mathbf b_{k+1}=\mathbf b_k+\sigma_b\sqrt{\Delta t}\,\mathbf w_k$. The accelerometer only senses contact forces (main thrust and RCS): it does not see gravity or the Hill terms, which the filter recomputes from the model.
 
 #### Translational EKF (9 states)
@@ -157,20 +147,10 @@ Quaternion convention: scalar first, $A(p\otimes q)=A(p)A(q)$, $\dot q=\tfrac12[
 <!-- ![EKF error and ±3σ bounds](docs/img/ekf_bounds.png) -->
 <!-- ![NEES](docs/img/nees.png) -->
 
-#### Closed-loop integration
-
-| Block | Uses |
-|---|---|
-| Guidance | $\hat{\mathbf p},\hat{\mathbf v}$ from the EKF |
-| Attitude control and feedforward | $\hat q,\hat{\boldsymbol\omega}$ from the MEKF |
-| Translational EKF | $\hat q$ from the MEKF (to rotate the accelerometer measurement) |
-| Sensors, plant, thrust projection | true state |
-
-The path guidance → thrust → accelerometer → EKF → guidance forms an algebraic loop within the same time step. It is broken by a one-IMU-step delay on the estimates fed to the guidance, representing onboard computation time. No delay is needed on the attitude side, since the MEKF depends only on the sensors.
 
 ## Requirements
 
-- MATLAB and Simulink (developed with R20XXx — *to be completed*)
+- MATLAB and Simulink (developed with R2022b)
 - Aerospace Toolbox (`quatmultiply`, `quatinv` in the attitude PD)
 
 ## How to run
