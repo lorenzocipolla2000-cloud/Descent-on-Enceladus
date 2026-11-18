@@ -1,16 +1,10 @@
 # Descent-on-Enceladus
 # Enceladus Landing GNC — Powered descent simulator for Enceladus
 
-**English** · [Italiano](README.it.md)
 
 Closed-loop Simulink simulator of the powered descent of a lander onto the surface of Enceladus. The **guidance – navigation – control** chain is complete: no onboard block uses the true state, only the estimates produced by the navigation filters.
 
 > Personal study project, inspired by the public studies of the ESA L4 (Enceladus) mission. **Not affiliated with ESA**; no restricted data are used.
-
-<!-- Insert a figure here: 3D trajectory or altitude/velocity vs time -->
-<!-- ![Nominal descent](docs/img/nominal_descent.png) -->
-
----
 
 ## Contents
 
@@ -185,10 +179,18 @@ The path guidance → thrust → accelerometer → EKF → guidance forms an alg
 
 ## How to run
 
-```matlab
-cd scripts
-run_encelado          % or: init_encelado; sim('encelado')
-```
+1. **Load the parameters.** Run the initialisation script first, so that all the variables used by the model are loaded into the MATLAB workspace:
+   ```matlab
+   init_encelado
+   ```
+2. **Run the simulation.** Open `encelado.slx` and start the simulation from Simulink, or from the command line:
+   ```matlab
+   sim('encelado')
+   ```
+3. **Plot the 3D trajectory (optional).** Once the simulation has finished, run the plotting script:
+   ```matlab
+   plot_trajectory_3d
+   ```
 
 Solver: fixed-step `ode4`, 0.01 s. All sensor and filter sample times are multiples of 0.01 s. The simulation stops when the true altitude reaches 0 (StopTime 500 s as a safety limit).
 
@@ -218,9 +220,5 @@ Solver: fixed-step `ode4`, 0.01 s. All sensor and filter sample times are multip
 
 ## Author
 
-**Lorenzo [Surname]** — Aerospace Engineering, Politecnico di Torino
-[LinkedIn](#) · [email](#)
+**Lorenzo Cipolla** — Aerospace Engineering, Politecnico di Torino
 
-## License
-
-Released under the MIT License (see `LICENSE`).
