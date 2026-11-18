@@ -2,22 +2,11 @@
 # Enceladus Landing GNC — Powered descent simulator for Enceladus
 
 
-Closed-loop Simulink simulator of the powered descent of a lander onto the surface of Enceladus. The **guidance – navigation – control** chain is complete: no onboard block uses the true state, only the estimates produced by the navigation filters.
+Closed-loop Simulink simulator of the powered descent of a lander onto the surface of Enceladus. The **guidance – navigation – control** chain is complete: no onboard block uses the true state, only the estimates produced by the navigation filters. 
 
 > Personal study project, inspired by the public studies of the ESA L4 (Enceladus) mission. **Not affiliated with ESA**; no restricted data are used.
 
-## Contents
-
-- [Features](#features)
-- [Models](#models)
-- [Requirements](#requirements)
-- [How to run](#how-to-run)
-- [Assumptions and limitations](#assumptions-and-limitations)
-- [Future work](#future-work)
-- [References](#references)
-- [Author](#author)
-
----
+Not yet modelled: main-engine thrust errors and minimum throttle, centre-of-mass offset torque, Enceladus $J_2$ oblateness, and orbital eccentricity.
 
 ## Features
 
@@ -46,6 +35,13 @@ $$
 \qquad
 \dot m = -\frac{\|\mathbf T\|}{I_{sp}g_0}
 $$
+
+### Rationale Initial Conditions
+The initial state represents the **start of the powered descent phase**, after the lander has already approached from orbit: an altitude of 2 km, a residual horizontal velocity of 40 m/s and a small sink rate of 5 m/s. These values are an engineering assumption, not the output of an orbit-to-surface trajectory computation. They are consistent with the ESA L4 concept, in which the lander is released from a Near-Rectilinear Halo Orbit and reaches the descent phase with relative velocities of a few tens of m/s rather than the full orbital velocity (about 170 m/s at low altitude).
+
+The landing site distance follows from the guidance problem. For an initial horizontal velocity $v_0$, zero final velocity and a descent time $t_f \approx 400$ s, the distance $D = v_0 t_f / 2 = 8$ km gives a **constant horizontal deceleration**, which is the smoothest and minimum-energy braking profile.
+
+The L4-specific terminal sequence (south polar site, vertical final approach, engine cutoff and free fall, hazard avoidance) is not yet modelled and is listed under future work.
 
 ### Guidance (D'Souza, free final time)
 
