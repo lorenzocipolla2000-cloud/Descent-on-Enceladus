@@ -4,7 +4,7 @@
 
 Closed-loop Simulink simulator of the powered descent of a lander onto the surface of Enceladus. The **guidance – navigation – control** chain is complete: no onboard block uses the true state, only the estimates produced by the navigation filters. 
 
-> Personal study project, inspired by the public studies of the ESA L4 (Enceladus) mission. **Not affiliated with ESA**; no restricted data are used.
+> **PERSONAL STUDY PROJECT**, inspired by the public studies of the ESA L4 (Enceladus) mission. **Not affiliated with ESA**; no restricted data are used.
 
 Not yet modelled: main-engine thrust errors and minimum throttle, centre-of-mass offset torque, Enceladus $J_2$ oblateness, and orbital eccentricity.
 
